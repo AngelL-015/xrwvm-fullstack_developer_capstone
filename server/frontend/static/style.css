@@ -154,6 +154,31 @@ img{
     font-size: 1.8rem;
 }
 
+/* HEADER ROW (icon + title) */
+.contact-header {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* SMALL ICON NEXT TO TITLE */
+.contact-icon {
+    align-items: left;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin: 0 0 10px 0;
+}
+
+/* DEALERSHIP IMAGE */
+.dealership-image {
+    width: 90%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 40px;
+}
+
 /* CARD CONTAINER */
 .contact-card-container {
     display: flex;
