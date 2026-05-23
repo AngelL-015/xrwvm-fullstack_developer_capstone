@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
@@ -53,7 +52,7 @@ def registration(request):
     last_name = data['lastName']
     email = data['email']
     username_exist = False
-    
+
     try:
         # Check if user already exists
         User.objects.get(username=username)
