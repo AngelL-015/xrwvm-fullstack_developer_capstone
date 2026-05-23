@@ -14,8 +14,6 @@ logger = logging.getLogger(__name__)
 # Views
 
 # Creates a `login_request` view to handle sign in request
-
-
 @csrf_exempt
 def login_user(request):
     # Get username and password from request.POST dictionary
@@ -32,16 +30,12 @@ def login_user(request):
     return JsonResponse(data)
 
 # Creates a `logout_request` view to handle sign out request
-
-
 def logout_request(request):
     logout(request)        # Terminate user session
     data = {"userName": ""}  # Return empty username
     return JsonResponse(data)
 
 # Creates a `registration` view to handle sign up request
-
-
 @csrf_exempt
 def registration(request):
     # Load JSOn data from the request
@@ -89,8 +83,7 @@ def get_cars(request):
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name,
-                     "CarMake": car_model.car_make.name})
+        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
 
@@ -99,13 +92,13 @@ def get_dealerships(request, state="All"):
     if (state == "All"):
         endpoint = "/fetchDealers"
     else:
-        endpoint = "/fetchDealers" + state
+        endpoint = "/fetchDealers/" + state
+    
     dealerships = get_request(endpoint)
     return JsonResponse({"status": 200, "dealers": dealerships})
 
+
 # Get dealer reviews
-
-
 def get_dealer_reviews(request, dealer_id):
     # if dealer id has been provided
     if (dealer_id):
@@ -130,16 +123,17 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
 # To submit a review
-
-
+@csrf_exempt
 def add_review(request):
-    if not request.user.is_anonymous:
+    if (request.user.is_anonymous == False):
         data = json.loads(request.body)
         try:
             response = post_review(data)
-            return JsonResponse({"status": 200, "message": response})
+            return JsonResponse({"status": 200})
         except BaseException:
-            return JsonResponse(
-                {"status": 401, "message": "Error in posting review"})
+            return JsonResponse({
+                "status": 500, 
+                "message": "Error in posting review"
+            })
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
