@@ -16,7 +16,7 @@ table{
   .review_panel{
     display: flex;
     flex-direction: column;
-    border: solid grey;
+    border: solid purple;
     position: relative;
     height:7cm;
     width:6cm;
